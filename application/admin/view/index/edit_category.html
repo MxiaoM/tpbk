@@ -1,0 +1,41 @@
+{include file="public/header,public/nav"}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            {include file="public/left"}
+        </div>
+        <div class="col-md-10">
+
+            <ol class="breadcrumb">
+                <li><a href="#">文章管理</a></li>
+                <li><a href="#">分类列表</a></li>
+                <li><a href="#">新增分类</a></li>
+            </ol>
+
+            <form method="post" action="{:url('save_category')}" class="edit_form" class="form"
+                  style="width: 30%;">
+
+                <div class="form-group">
+                    <label for="">分类名</label>
+                    <input type="text" name="name" class="form-control" id=""
+                           placeholder="输入分类名称" value="{$info.name}">
+                </div>
+                <div class="form-group">
+                    <label for="">分类排序</label>
+                    <input type="text" name="sort" class="form-control" id=""
+                           placeholder="输入分类排序" value="{$info.sort}">
+                </div>
+
+                <input type="hidden" name="__token__" value="{$Request.token}" />
+                <input type="hidden" name="uid" value="{:USER_ID}" />
+                <input type="hidden" name="id" value="{$info.id}" />
+                <INPUT type="submit" class="btn btn-info" value="保存">
+                <div class="err_tips"></div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{include file="public/footer"}

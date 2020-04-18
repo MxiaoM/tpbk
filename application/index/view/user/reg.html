@@ -1,0 +1,41 @@
+{include file="public:header,public:nav"}
+<div class="container">
+    <div class="row">
+    <div class="col-md-8">
+        <div class="page-header">
+            <h3>用户注册</h3>
+        </div>
+            <form method="post" class="reg_form" class="form" style="width: 50%" >
+                <div class="form-group">
+                    <label for="">用户名</label>
+                    <input type="text" name="username" class="form-control" id="" placeholder="请输入账号">
+                </div>
+                <div class="form-group">
+                    <label for="">邮箱</label>
+                    <input type="text" name="email" class="form-control" id="" placeholder="请输入账号">
+                </div>
+                <div class="form-group">
+                    <label for="">手机号</label>
+                    <input type="text" name="mobile" class="form-control" id="" placeholder="请输入账号">
+                </div>
+                <div class="form-group">
+                    <label for="">密码</label>
+                    <input type="password" name="password" class="form-control" id="" placeholder="请输入密码">
+                </div>
+                <div class="form-group">
+                    <label for="">再次输入</label>
+                    <input type="password" name="password_confirm" class="form-control" id="" placeholder="请输入密码">
+                </div>
+
+                <input type="hidden" name="__token__" value="{$Request.token}">
+                <input type="button" class="btn btn-default reg_btn" value="注册新用户">
+                <div class="err_tips"></div>
+            </form>
+
+
+    </div>
+
+    {include file="public:right"}
+</div>
+</div>
+{include file="public:footer"}

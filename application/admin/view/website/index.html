@@ -1,0 +1,70 @@
+{include file="public/header,public/nav"}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            {include file="public/left"}
+        </div>
+        <div class="col-md-10">
+
+            <ol class="breadcrumb">
+                <li><a href="#">系统管理</a></li>
+                <li><a href="#">页面配置</a></li>
+            </ol>
+
+            <form method="post" action="{:url('save')}" class="edit_form" class="form"
+                  style="width: 30%;">
+
+                <div class="form-group">
+                    <label for="">网站名称</label>
+                    <input type="text" name="webname" class="form-control" id=""
+                           placeholder="输入网站名称" value="{$info.webname}">
+                </div>
+
+                <div class="form-group">
+                    <label for="">网站关键字</label>
+                    <textarea class="form-control" rows="5" cols="80" name="webkeywords" >{$info.webkeywords}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="">开启网站</label>
+                    <div>
+                        是：
+                        <input type="radio" value="1" name="is_open" {if condition="$info['is_open'] eq 1"}checked{/if}/>
+                        &nbsp;否：
+                        <input type="radio" value="0" name="is_open" {if condition="$info['is_open'] eq 0"}checked{/if}/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="">开启注册</label>
+                    <div>
+                        是：
+                        <input type="radio" value="1" name="is_reg" {if condition="$info['is_reg'] eq 1"}checked{/if}/>
+                        &nbsp;否：
+                        <input type="radio" value="0" name="is_reg" {if condition="$info['is_reg'] eq 0"}checked{/if}/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="">开启评论</label>
+                    <div>
+                        是：
+                        <input type="radio" value="1" name="is_comment" {if condition="$info['is_comment'] eq 1"}checked{/if}/>
+                        &nbsp;否：
+                        <input type="radio" value="0" name="is_comment" {if condition="$info['is_comment'] eq 0"}checked{/if}/>
+                    </div>
+                </div>
+
+
+                <input type="hidden" name="__token__" value="{$Request.token}" />
+                <input type="hidden" name="id" value="{$info.id}" />
+                <INPUT type="submit" class="btn btn-info" value="保存">
+                <div class="err_tips"></div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{include file="public/footer"}

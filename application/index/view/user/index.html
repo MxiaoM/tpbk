@@ -1,0 +1,38 @@
+{include file="public:header,public:nav"}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="page-header">
+                <h3>用户中心</h3>
+            </div>
+            <div>
+                {volist name="user_list" id="vo"}
+                <h4>用户名：{$vo.username}</h4>
+                <p>手机号：{$vo.mobile}</p>
+                <p>邮箱：{$vo.email}</p>
+                {/volist}
+            </div>
+            <div>
+                <h3>我的文章</h3>
+                <hr>
+                <ul>
+                    {volist name="user_document" id="vo"}
+                    <li><a href="{:url('index/index/detail',['id'=>$vo['id']])}">{$vo.title}</a></li>
+                    {/volist}
+                </ul>
+            </div>
+            <div>
+                <h3>我的收藏</h3>
+                <hr>
+                <ul>
+                    {volist name="fav" id="vo"}
+                    <li><a href="{:url('index/index/detail',['id'=>$vo['id']])}">{$vo.title}</a></li>
+                    {/volist}
+                </ul>
+            </div>
+        </div>
+
+        {include file="public:right"}
+    </div>
+</div>
+{include file="public:footer"}

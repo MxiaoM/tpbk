@@ -1,0 +1,36 @@
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<!-- <script src="js/bootstrap.min.js"></script> -->
+{load href="__ROOT__/static/bootstrap/js/bootstrap.min.js" /}
+</body>
+
+<script>
+    $(function(){
+        // 用户登录
+        $('.login_btn').click(function(){
+
+            $.ajax({
+                type: 'post',
+                url: "{:url('admin/user/doLogin')}",
+                data: $(".login_form").serialize(),
+                success: function(data) {
+                    if(data.status)
+                    {
+                        $('.err_tips').html(data.msg);
+                        setTimeout(function(){
+                            // 跳转到后台首页
+                            window.location.href = "{:url('admin/index/index')}";
+                        },1000);
+                    }
+                    else
+                    {
+                        $('.err_tips').html(data.msg);
+                    }
+                }
+            });
+        })
+    })
+</script>
+</html>

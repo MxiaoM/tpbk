@@ -1,0 +1,12 @@
+<div class="col-md-4">
+    <div class="page-header">
+        <h3>最新动态</h3>
+    </div>
+    <div>
+        <ul class="nav nav-pills nav-stacked">
+            {volist name="doc_time_list" id="vo"}
+            <li><a href="{:url('index/index/index',array('publish_date'=>$vo.publish_date))}">{$vo.publish_date}({$vo.doc_num})</a></li>
+            {/volist}
+        </ul>
+    </div>
+</div>

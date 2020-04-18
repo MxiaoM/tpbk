@@ -1,0 +1,169 @@
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+{load href="__STATIC__/wangEditor/release/wangEditor.min.js"/}
+<script src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+
+<script>
+    $(function(){
+        var _editor =$('#editor');
+        if (_editor.attr('id') != undefined)
+        {
+            var E = window.wangEditor
+            var editor = new E('#editor')
+            editor.create()
+            window.onload=function(){
+                document.getElementById('btn1').addEventListener('click', function () {
+                    // 读取 html
+                    var editor_txt=editor.txt.html();
+                    document.getElementById('editor_txt').value=editor_txt;
+                }, false)
+            }
+       }
+//用户注册
+
+        $('.reg_btn').click(function () {
+
+            $.ajax({
+                type: 'POST',
+                url: "{:url('index/user/add')}",
+                data: $('.reg_form').serialize(),
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        $('.err_tips').html(data.msg);
+                        setTimeout(function () {
+                            window.location.href = "{:url('index/user/index')}";
+                        },1000)
+                    }
+                    else
+                    {
+                        $('.err_tips').html(data.msg);
+                    }
+                }
+            })
+        })
+        //用户登录
+        $('.login_btn').click(function () {
+
+            $.ajax({
+                type: 'POST',
+                url: "{:url('index/user/doLogin')}",
+                data: $('.login_form').serialize(),
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        $('.err_tips').html(data.msg);
+                        setTimeout(function () {
+                            window.location.href = "{:url('index/index/index')}";
+                        },1000)
+                    }
+                    else
+                    {
+                        $('.err_tips').html(data.msg);
+                    }
+                }
+            })
+        })
+        $('.fav_btn').click(function () {
+
+            var _uid = $(this).attr('uid');
+            var _document_id = $(this).attr('document_id');
+            var _self = $(this);
+            if(!_uid){
+                alert('用户未登录')
+            }
+            if (_uid && _document_id)
+            {
+                $.post("{:url('index/index/fav')}",
+                    {
+                        uid:_uid,
+                        document_id:_document_id,
+                        //time:new Date().getTime()
+                    },
+                    function (msg) {
+                    if (msg.status)
+                    {
+
+                       if (msg.type == 1){
+                           _self.text('已收藏');
+                           _self.attr('class','btn btn-info fav_btn');
+
+                       }else
+                       {
+                           _self.text('收藏');
+                           _self.attr('class','btn btn-default fav_btn');
+                       }
+                    }
+                    else
+                        {
+                            alert(msg.msg)
+                        }
+                })
+            }
+        })
+
+        $('.support_btn').click(function () {
+            var _uid = $(this).attr('uid');
+            var _document_id = $(this).attr('document_id');
+            var _self = $(this);
+            if(!_uid){
+                alert('用户未登录')
+            }
+            if (_uid && _document_id)
+            {
+                $.post("{:url('index/index/support')}",
+                    {
+                        uid:_uid,
+                        document_id:_document_id,
+                       // time:new Date().getTime()
+                    },
+                    function (msg) {
+                        if (msg.status)
+                        {
+
+                            if (msg.type == 1){
+                                _self.text('赞');
+                                _self.attr('class','btn btn-info support_btn');
+
+                            }else
+                            {
+                                _self.text('赞');
+                                _self.attr('class','btn btn-default support_btn');
+                            }
+                        }
+                        else
+                        {
+                            alert(msg.msg)
+                        }
+                    })
+            }
+        })
+
+        $('.submit_comment').click(function () {
+            $.ajax({
+                type:'post',
+                url:"{:url('index/index/add_comment')}",
+                data:$(".comment_from").serialize(),
+                success:function (data) {
+                    if (data.status ==1)
+                    {
+                        $('.err_tips').html(data.msg);
+                        setTimeout(function () {
+                           window.location.reload();
+                        },1000)
+                    }
+                    else
+                    {
+                        $('.err_tips').html(data.msg);
+                    }
+                }
+            })
+        })
+    })
+
+</script>
+</body>
+</html>

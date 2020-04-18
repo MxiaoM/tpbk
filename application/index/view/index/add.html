@@ -1,0 +1,43 @@
+{include file="public/header,public/nav"}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="page-header">
+                <h3>发布文章</h3>
+            </div>
+            <form action="{:url('index/index/save')}" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="uid" value="{:USER_ID}">
+                <div class="form-group">
+                    <label for="doc_title">文章标题</label>
+                    <input type="text" name="title" class="form-control" id="doc_title" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label>文章分类</label>
+                    <select class="form-control" name="document_category_id">
+                        {volist name="catesLists" id="vo"}
+
+                        <option value="{$vo.id}">{:$vo['name']}</option>
+                        {/volist}
+                    </select>
+                </div>
+                <div class="from-group">
+                    <label>文章内容</label>
+                    <input type="hidden" name="content" id="editor_txt">
+                    <div id="editor">
+
+                    </div>
+                    <!--<textarea class="form-control"placeholder="文章内容" id="public_content" name="content" style="min-height: 500px; "></textarea>-->
+                </div>
+                <div class="form-group">
+                    <label for="img_path">文章图片</label>
+                    <input type="file" id="img_path" name="img_path">
+                    <p class="help-block"></p>
+                </div>
+                <button type="submit"id="btn1" class="btn btn-default">保存文章</button>
+            </form>
+        </div>
+        {include file="public/right"}
+    </div>
+</div>
+{include file="public:footer"}

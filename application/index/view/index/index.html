@@ -1,0 +1,37 @@
+{include file="public:header,public:nav"}
+<div class="container">
+    <div class="row">
+    <div class="col-md-8">
+        <div class="page-header">
+            <h3>{$page_header}</h3>
+        </div>
+        {empty name="_list"}
+        <h4 style="width: 100%;min-height: 500px;line-height: 500px;text-align: center">
+            暂无数据
+        </h4>
+        {else/}
+        {volist name="_list" id="v"}
+        <div class="blog-content" style="min-width: 100%;min-height: 250px">
+            <img class="img-rounded" src="/tp5bk/public/uploads/{$v.img_path}" style="margin-right: 10px;float: left;width: 100px;">
+            <div class="container-detail" style="float: left;width: 80%">
+                <h4><a href="{:url('index/index/detail',['id'=>$v['id']])}">{$v.title}</a></h4>
+                <p>
+                    作者：{$v.uid|getUserName}
+                    发布时间：{$v.create_time|date='Y-m-d',###}
+                    点击量：{$v.pv}
+                </p>
+                <div>{:getDocBody($v['content'])}</div>
+                <hr>
+            </div>
+        </div>
+        {/volist}
+        {$_list->render()}
+        {/empty}
+
+    </div>
+
+    {include file="public:right"}
+</div>
+</div>
+{include file="public:footer"}
+

@@ -1,0 +1,61 @@
+{include file="public/header,public/nav"}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            {include file="public/left"}
+        </div>
+        <div class="col-md-10">
+
+            <ol class="breadcrumb">
+                <li><a href="{:url('document_list')}">文章管理</a></li>
+                <li><a href="{:url('document_list')}">文章列表</a></li>
+                <li><a href="{:url('comment_list',array('id'=>$id))}">评论列表</a></li>
+            </ol>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>评论内容</th>
+                    <th>发布人</th>
+                    <th>发布时间</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {empty name="_list"}
+                    <tr><td colspan="7" style="text-align:center">暂无评论</td></tr>
+                {else/}
+                {volist name="_list" id="vo"}
+                <tr>
+                    <th scope="row">{$vo.id}</th>
+                    <td>{$vo.content}</td>
+                    <td>{$vo.uid|getUserName}</td>
+                    <td>{$vo.create_time|date='Y-m-d H:i' , ###}</td>
+                    <td>{$vo.status|getStatusTitle}</td>
+                    <td>
+                        {if condition='$vo["status"] eq 0'}
+                        <a href="{:url('index/setDocumentCommentStatus' , array('id'=>$vo['id'],'status'=>1))}">启用</a>
+                        {else/}
+                        <a href="{:url('index/setDocumentCommentStatus' , array('id'=>$vo['id'],'status'=>0))}">禁用</a>
+                        {/if}
+                        <a href="{:url('index/setDocumentCommentStatus' , array('id'=>$vo['id'],'status'=>-1))}">删除</a>
+
+                    </td>
+                </tr>
+                {/volist}
+                {/empty}
+                </tbody>
+            </table>
+            <!--分页-->
+            {empty name="_list"}
+            {else/}
+                {$_list->render()}
+            {/empty}
+        </div>
+    </div>
+</div>
+
+{include file="public/footer"}

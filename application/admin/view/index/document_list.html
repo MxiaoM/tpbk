@@ -1,0 +1,73 @@
+{include file="public/header,public/nav"}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            {include file="public/left"}
+        </div>
+        <div class="col-md-10">
+
+            <ol class="breadcrumb">
+                <li><a href="#">文章管理</a></li>
+                <li><a href="#">文章列表</a></li>
+            </ol>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>缩略图</th>
+                    <th>标题</th>
+                    <th>内容</th>
+                    <th>pv</th>
+                    <th>发布人</th>
+                    <th>发布时间</th>
+                    <th>评论管理</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="_list" id="vo"}
+                <tr>
+                    <th scope="row">{$vo.id}</th>
+                    <td>
+                        <a target="_blank" href="/tp5bk/public/uploads/{$vo.img_path}">
+                            <img src="/tp5bk/public/uploads/{$vo.img_path}"
+                                 width="100px" alt="" />
+                        </a>
+                    </td>
+
+                    <td>{$vo.title}</td>
+                    <td>{:getDocBody($vo['content'])}</td>
+                    <td>{$vo.pv}</td>
+                    <td>{$vo.uid|getUserName}</td>
+
+                    <td>{$vo.create_time|date='Y-m-d H:i' , ###}</td>
+                    <td>
+                        <a href="{:url('comment_list' , array('id'=>$vo['id']))}">
+                            查看评论
+                        </a>
+                    </td>
+                    <td>{$vo.status|getStatusTitle}</td>
+                    <td>
+                        {if condition='$vo["status"] eq 0'}
+                        <a href="{:url('index/setDocumentStatus' , array('id'=>$vo['id'],'status'=>1))}">启用</a>
+                        {else/}
+                        <a href="{:url('index/setDocumentStatus' , array('id'=>$vo['id'],'status'=>0))}">禁用</a>
+                        {/if}
+                        <a target="_blank" href="{:url('index/index/detail' , array('id'=>$vo['id']))}">预览</a>
+                        <a href="{:url('index/setDocumentStatus' , array('id'=>$vo['id'],'status'=>-1))}">删除</a>
+
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+            <!--分页-->
+            {$_list->render()}
+        </div>
+    </div>
+</div>
+
+{include file="public/footer"}

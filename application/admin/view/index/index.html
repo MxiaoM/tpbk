@@ -1,0 +1,68 @@
+
+{include file="public/header,public/nav"}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            {include file="public/left"}
+        </div>
+        <div class="col-md-10">
+
+            <ol class="breadcrumb">
+                <li><a href="#">用户管理</a></li>
+                <li><a href="#">用户列表</a></li>
+            </ol>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>UID</th>
+                    <th>用户名</th>
+                    <th>邮箱</th>
+                    <th>手机号</th>
+                    <th>IP地址</th>
+                    <th>登录时间</th>
+                    <th>注册时间</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="_list" id="vo"}
+                <tr>
+                    <th scope="row">{$vo.id}</th>
+                    <td>{$vo.username}</td>
+                    <td>{$vo.email|default='--'}</td>
+                    <td>{$vo.mobile}</td>
+                    <td>{$vo.ipaddress}</td>
+                    <td>{$vo.update_time|date='Y-m-d H:i' , ###}</td>
+                    <td>{$vo.create_time|date='Y-m-d H:i' , ###}</td>
+                    <td>{$vo.status|getStatusTitle}</td>
+                    <td>
+                        {if condition="config('ADMIN_ID') neq $vo['id']"}
+                        {if condition='$vo["status"] eq 1'}
+                        <a href="{:url('index/setUserStatus' , array('id'=>$vo['id'] , 'status' => 0))}">禁用</a>
+                        {else/}
+                        <a href="{:url('index/setUserStatus' , array('id'=>$vo['id'] , 'status' => 1))}">启用</a>
+                        {/if}
+                        {if condition='$vo["is_admin"] eq 1'}
+                        <a href="{:url('index/setUserAdmin' , array('id'=>$vo['id'] , 'is_admin' => 0))}">取消授权</a>
+                        {else/}
+                        <a href="{:url('index/setUserAdmin' , array('id'=>$vo['id'] , 'is_admin' => 1))}">开启授权</a>
+                        {/if}
+                        <a href="{:url('index/setUserStatus' , array('id'=>$vo['id'] , 'status' => -1))}" >删除</a>
+                        {else/}
+                        --
+                        {/if}
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+            <!--分页-->
+            {$_list->render()}
+        </div>
+    </div>
+</div>
+
+{include file="public/footer"}
